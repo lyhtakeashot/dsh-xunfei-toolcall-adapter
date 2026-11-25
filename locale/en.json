@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Xunfei compatible adapter",
+    "description": "Adds the xunfei-compatible provider route, which wraps an existing Xunfei route and turns tool calls that the model wrote out as plain text into standard tool calls, so agent turns continue instead of ending. Forwards requests to the route named by targetProvider (xunfei by default) and raises no requests of its own. Only a final response that stopped normally and whose text contains a complete, parseable call for a tool declared in that request is rewritten; every other response streams through unchanged, including all text already withheld. Read the request log at ~/.dsh/xunfei-compatible-adapter/adapter-requests.jsonl to see the tool count of each request and whether it was converted. Turning the plugin off removes the route and changes nothing else."
+  }
+}

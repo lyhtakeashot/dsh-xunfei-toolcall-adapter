@@ -1,0 +1,15 @@
+﻿# 真实 LlmRuntime 契约验证
+# 运行时: <由你本机实际运行时填写>
+# node_modules: <自动探测到的路径>
+
+真实模块已加载（LlmRuntime + BlockAssembler）
+
+PASS  adapter 具备全部必需方法（prepareCall / imageRequestPricing / imageRequestTarget）
+PASS  imageRequestPricing 可被调用（不抛 is not a function）
+PASS  imageRequestTarget 原样透传尺寸（与基类默认一致）
+PASS  经真实 prepareCall 派发：空 tools 场景被改写为 tool-calls
+PASS  经真实 llm.stream() 派发：普通回答保持 stop
+PASS  原 xunfei route 仍可独立工作（未被本插件影响）
+PASS  listProviders 同时包含 xunfei 与 xunfei-compatible
+
+SUMMARY failures=0

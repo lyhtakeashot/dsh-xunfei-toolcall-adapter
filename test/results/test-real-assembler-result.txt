@@ -1,0 +1,13 @@
+﻿# 真实 BlockAssembler 交叉验证
+# 运行时: <由你本机实际运行时填写>
+# 目标: <自动探测到的 dsh-llm 入口>
+
+模块已加载；导出项包含 BlockAssembler: true
+
+PASS  官方 BlockAssembler 是可构造的类
+PASS  改写后的 chunks 能被官方 assembler 重建出 tool-call
+PASS  官方 assembler 能把改写结果定型成 assistant 消息
+PASS  透传路径下官方 assembler 保持 stop 与正文
+PASS  多调用时官方 assembler 保留全部 tool-call
+
+SUMMARY failures=0

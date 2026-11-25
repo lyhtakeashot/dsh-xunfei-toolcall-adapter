@@ -1,0 +1,3 @@
+﻿stream-rewriter exit=0 | ℹ tests 37 | ℹ pass 37 | ℹ fail 0
+adapter        exit=0 | ℹ tests 14 | ℹ pass 14 | ℹ fail 0
+stream-probe   exit=0 | 结论：正文随生成逐步吐出（首尾差 407ms，流式保留成功）

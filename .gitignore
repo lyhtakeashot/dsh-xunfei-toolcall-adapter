@@ -1,0 +1,25 @@
+# Prerequisites
+node_modules/
+.npm/
+.pnpm-store/
+
+# Build / packaging output
+*.tgz
+dist/
+build/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+
+# Note: test/results/*.txt is committed on purpose.
+# They are sanitized evidence of passing runs, useful to reviewers.
+# Re-running the suites rewrites them with your own machine's paths;
+# strip absolute paths before committing if you do.

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "讯飞文本工具链兼容适配器",
+    "description": "新增 xunfei-compatible 这条 provider route，包装你已有的讯飞 route，把模型用纯文本写出来的工具调用改写成标准 tool calls，让 agent 轮次能继续执行而不是直接结束。请求全部转发给 targetProvider 指定的 route（默认 xunfei），自身不发任何网络请求。只有「正常结束的 stop 响应、正文里含完整可解析的调用、且工具名在本次请求声明过的工具里」才会被改写；其余响应一律原样流式透传，包括已经被暂扣的全部正文。请求日志在 ~/.dsh/xunfei-compatible-adapter/adapter-requests.jsonl，可查看每次请求的工具数量以及是否发生转换。关掉插件只会移除这条 route，不影响其他任何东西。"
+  }
+}

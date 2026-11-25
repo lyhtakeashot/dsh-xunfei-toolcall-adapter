@@ -1,0 +1,27 @@
+# 安装后冒烟验证（模拟宿主，真实插件代码）
+
+PASS  插件注册了 xunfei-compatible
+PASS  原 xunfei route 仍然存在（未被夺走）
+PASS  没有产生 DUPLICATE_ADAPTER 警告
+PASS  注册了恰好 1 个 adapter
+PASS  providerInfo 的 id 与 route 名一致
+PASS  finish 变成 tool-calls
+PASS  产出 1 个 tool-call 块
+PASS  工具名正确
+PASS  参数是 raw JSON 字符串且可解析
+PASS  无标签文本泄漏
+PASS  usage 在 finish 之前
+PASS  finish 是最后一个 chunk
+PASS  普通回答保持 stop
+PASS  正文完整
+PASS  没有虚构 tool-call
+PASS  listModels 返回模型
+PASS  listModels 的 provider 被改写为本 route
+PASS  resolveModel 转发上下文窗口
+PASS  resolveModel 的 provider 被改写
+PASS  沿用下游重试策略
+PASS  下游缺失时 apply 不抛错
+PASS  下游缺失时仍注册本 route
+PASS  下游缺失时给出 warning
+
+SUMMARY failures=0

@@ -1,0 +1,4 @@
+﻿全文共 37 字；首个 text-delta 出现在 +164ms
+最后一个 text-delta 出现在 +571ms
+最后的 chunk（finish）出现在 +571ms
+结论：正文随生成逐步吐出（首尾差 407ms，流式保留成功）

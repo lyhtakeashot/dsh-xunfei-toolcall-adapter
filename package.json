@@ -1,0 +1,45 @@
+{
+  "name": "@local/xunfei-compatible-adapter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Recovers Xunfei MaaS text-rendered tool calls into standard tool calls on a new provider route",
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/parse-text-tool-calls.js",
+    "lib/stream-rewriter.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "README.md",
+    "README.zh.md",
+    "docs",
+    "icon.svg"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.4"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node test/stream-rewriter.test.mjs && node test/adapter.test.mjs"
+  }
+}
