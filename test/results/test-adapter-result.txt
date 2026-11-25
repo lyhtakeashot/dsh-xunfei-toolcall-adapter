@@ -1,23 +1,23 @@
 ﻿▶ 包装 adapter：转发与 route 隔离
-  ✔ 转发时 provider 换成 targetProvider，其余字段原样不改 (2.0401ms)
-  ✔ route 与 targetProvider 相同时构造即报错（防递归） (0.3025ms)
-  ✔ 下游 route 未注册时只警告、不阻断插件加载（顺序无关） (0.2101ms)
-  ✔ 请求期下游缺失时给出可读错误，而不是裸 NO_ADAPTER (0.3381ms)
-✔ 包装 adapter：转发与 route 隔离 (3.7023ms)
+  ✔ 转发时 provider 换成 targetProvider，其余字段原样不改 (2.204ms)
+  ✔ route 与 targetProvider 相同时构造即报错（防递归） (0.3041ms)
+  ✔ 下游 route 未注册时只警告、不阻断插件加载（顺序无关） (0.2165ms)
+  ✔ 请求期下游缺失时给出可读错误，而不是裸 NO_ADAPTER (0.3531ms)
+✔ 包装 adapter：转发与 route 隔离 (3.9028ms)
 ▶ 包装 adapter：chunks 能重建 assistant 消息
-  ✔ 空 tools 场景改写后，能由 chunks 重建出 tool-call 块且无文本泄漏 (1.477ms)
-  ✔ 正常回答（无工具调用）保持 stop 与正文原样 (0.502ms)
-  ✔ 下游本来就是 tool-calls 时透传，合成 id 不覆盖上游 id (0.3448ms)
-  ✔ 正文里引用标签但未构成调用时，正文完整保留（不静默丢字） (0.3194ms)
-  ✔ parseTextToolCalls:false 时退化为纯转发 (0.2434ms)
-✔ 包装 adapter：chunks 能重建 assistant 消息 (3.1685ms)
+  ✔ 空 tools 场景改写后，能由 chunks 重建出 tool-call 块且无文本泄漏 (1.6669ms)
+  ✔ 正常回答（无工具调用）保持 stop 与正文原样 (0.4517ms)
+  ✔ 下游本来就是 tool-calls 时透传，合成 id 不覆盖上游 id (0.3149ms)
+  ✔ 正文里引用标签但未构成调用时，正文完整保留（不静默丢字） (0.3914ms)
+  ✔ parseTextToolCalls:false 时退化为纯转发 (0.2411ms)
+✔ 包装 adapter：chunks 能重建 assistant 消息 (3.3507ms)
 ▶ 包装 adapter：目录与元数据转发
-  ✔ listModels 把 provider 换成自己的 route (0.258ms)
-  ✔ resolveModel 转发元数据并改写 provider (0.1654ms)
-  ✔ providerInfo 保留 route id 并使用配置的显示名 (0.1122ms)
-  ✔ providerRetryPolicy 沿用下游 route 的策略 (0.1065ms)
-  ✔ 下游没有重试策略时降级为 undefined 而不是抛错 (0.1448ms)
-✔ 包装 adapter：目录与元数据转发 (0.946ms)
+  ✔ listModels 把 provider 换成自己的 route (0.2587ms)
+  ✔ resolveModel 转发元数据并改写 provider (0.1646ms)
+  ✔ providerInfo 保留 route id 并使用配置的显示名 (0.113ms)
+  ✔ providerRetryPolicy 沿用下游 route 的策略 (0.1105ms)
+  ✔ 下游没有重试策略时降级为 undefined 而不是抛错 (0.1483ms)
+✔ 包装 adapter：目录与元数据转发 (0.9587ms)
 ℹ tests 14
 ℹ suites 3
 ℹ pass 14
@@ -25,4 +25,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 13.9402
+ℹ duration_ms 14.104

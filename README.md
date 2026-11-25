@@ -1,4 +1,4 @@
-# Xunfei tool-call adapter for DeepSeek Harness
+﻿# Xunfei tool-call adapter for DeepSeek Harness
 
 [中文](README.zh.md)
 
@@ -52,9 +52,12 @@ Everything else streams through untouched — including every other response, wh
 | Form | Example |
 |---|---|
 | Tagged with argument pairs | `<tool_call>get_weather<arg_key>city</arg_key><arg_value>Beijing</arg_value></tool_call>` |
+| **Truncated tag** (observed in practice) | `<pwsh<arg_key>command</arg_key><arg_value>ls</arg_value></tool_call>` |
 | Tagged with JSON | `<tool_call>{"name":"get_weather","arguments":{"city":"Oslo"}}</tool_call>` |
 | Prefixed line | `TOOL_CALL: {"name":"get_weather","arguments":{"city":"Beijing"}}` |
 | Prefixed line, one tool declared | `TOOL_CALL: {"city": "Beijing"}` |
+
+The truncated form is real: Xunfei sometimes omits the opening `<tool_call>` and starts straight at `工具名<arg_key>`. It is accepted **only** when the name matches a tool declared in that request and is immediately followed by `<arg_key>`, so ordinary prose that merely mentions a tool name is never mistaken for a call.
 
 Values coerce as booleans, then numbers, then JSON, else raw string. Multiple calls per message are supported, and prose interleaved with calls keeps its original order.
 
@@ -140,7 +143,7 @@ The session log records the chunks **emitted by this adapter**, not the raw upst
 ### Test suites
 
 ```bash
-node test/stream-rewriter.test.mjs    # 37 cases: parser, rewriter, streaming, no-text-loss
+node test/stream-rewriter.test.mjs    # 44 cases: parser, rewriter, streaming, no-text-loss
 node test/adapter.test.mjs            # 14 cases: forwarding, route isolation, message rebuild
 node test/streaming-probe.mjs         # measures that prose still streams
 node test/installed-smoke.mjs out.txt # 23 assertions against the real plugin code

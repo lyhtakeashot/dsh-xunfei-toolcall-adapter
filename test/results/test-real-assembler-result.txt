@@ -1,6 +1,7 @@
-﻿# 真实 BlockAssembler 交叉验证
-# 运行时: <由你本机实际运行时填写>
-# 目标: <自动探测到的 dsh-llm 入口>
+# 真实 BlockAssembler 交叉验证
+# 运行时: electron 44.7.0
+
+# 目标: D:\DeepSeek Harness\resources\app.asar\dsh\node_modules\@deepseek-ai\dsh-llm\lib\index.js
 
 模块已加载；导出项包含 BlockAssembler: true
 

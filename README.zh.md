@@ -1,4 +1,4 @@
-# xunfei-compatible-adapter
+﻿# xunfei-compatible-adapter
 
 [English](README.md) | 中文
 
@@ -32,9 +32,14 @@
 | 形式 | 例子 |
 |---|---|
 | 标签 + 参数对 | `<tool_call>get_weather<arg_key>city</arg_key><arg_value>Beijing</arg_value></tool_call>` |
+| **残缺标签**（实测遇到） | `<pwsh<arg_key>command</arg_key><arg_value>ls</arg_value></tool_call>` |
 | 标签 + JSON 对象 | `<tool_call>{"name":"get_weather","arguments":{"city":"Oslo"}}</tool_call>` |
 | 前缀行 | `TOOL_CALL: {"name":"get_weather","arguments":{"city":"Beijing"}}` |
 | 前缀行、只声明一个工具 | `TOOL_CALL: {"city": "Beijing"}` |
+
+残缺形态是真实存在的：讯飞偶尔省掉开头的 `<tool_call>`，直接从 `工具名<arg_key>` 开始。
+只在**工具名属于本次请求声明的工具**、且紧跟 `<arg_key>` 时才接受，
+因此正文里单纯提到工具名不会被误判成调用。
 
 参数值的还原顺序与已验证的参考代理一致：布尔 → 数字 → JSON，都不成立就保留原始字符串。支持一条消息里多个调用，且「正文与调用混排」时保持原始顺序。
 
@@ -146,7 +151,7 @@ configurable-provider 目录条目，以此换取「零设置命名空间、零�
 用 bundled Node 运行（本沙箱拦截 `node --test` 的子进程 spawn，属已记录的 `EPERM` 边界，因此逐个文件在当前进程内执行）：
 
 ```powershell
-node test/stream-rewriter.test.mjs      # 37 例：解析器、改写器、流式保留、不丢正文
+node test/stream-rewriter.test.mjs      # 44 例：解析器、改写器、流式保留、不丢正文
 node test/adapter.test.mjs              # 14 例：转发、route 隔离、消息重建、加载顺序
 node test/streaming-probe.mjs           # 实测「正文确实是流式吐出」而非结尾一次性积压
 ```

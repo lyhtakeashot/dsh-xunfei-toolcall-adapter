@@ -191,6 +191,78 @@ describe('解析器：多调用与值类型', () => {
   })
 })
 
+describe('解析器：残缺标签回退（实测观察到的变体）', () => {
+  it('缺开头的 <tool_call> 时，白名单工具名 + arg_key 仍能恢复', () => {
+    const text = '<pwsh<arg_key>command</arg_key><arg_value>Get-ChildItem \'A题\\A题\' -Recurse -Depth 3</arg_value>'
+      + '<arg_key>description</arg_key><arg_value>List A题/A题 directory tree</arg_value></tool_call>'
+    const parsed = parseTextToolCalls(text, ['pwsh', 'read'])
+    assert.equal(parsed.calls.length, 1)
+    assert.equal(parsed.calls[0].name, 'pwsh')
+    assert.deepEqual(JSON.parse(parsed.calls[0].arguments), {
+      command: "Get-ChildItem 'A题\\A题' -Recurse -Depth 3",
+      description: 'List A题/A题 directory tree',
+    })
+    assert.ok(parsed.issues.includes('bare-tool-call-recovered'))
+    assert.ok(isConvertible(parsed, ['pwsh', 'read']))
+  })
+
+  it('残缺形态转换后不残留 </tool_call> 等孤立标签', () => {
+    const text = '<pwsh<arg_key>command</arg_key><arg_value>ls</arg_value></tool_call>'
+    const parsed = parseTextToolCalls(text, ['pwsh'])
+    assert.equal(parsed.calls.length, 1)
+    // span 应覆盖整段原文，不留尾巴
+    assert.equal(parsed.spans[0].start, 0)
+    assert.equal(parsed.spans[0].end, text.length)
+    const segments = buildSegments(text, parsed)
+    assert.deepEqual(segments.map((segment) => segment.kind), ['call'])
+  })
+
+  it('残缺形态在任意流式分片粒度下都能转换（含逐字符）', async () => {
+    const text = '<pwsh<arg_key>command</arg_key><arg_value>ls</arg_value></tool_call>'
+    for (const deltaSize of [1, 2, 3, 7, 20, 999]) {
+      const upstream = upstreamTextStream(text, { deltaSize })
+      const { chunks } = await runRewrite(upstream, ['pwsh'])
+      assert.equal(
+        finishOf(chunks).reason.kind,
+        'tool-calls',
+        `deltaSize=${deltaSize} 时应转换为 tool-calls`,
+      )
+      const calls = toolCallBlocks(chunks)
+      assert.equal(calls.length, 1, `deltaSize=${deltaSize} 应产出 1 个调用`)
+      assert.equal(calls[0].name, 'pwsh')
+      assert.deepEqual(JSON.parse(calls[0].arguments), { command: 'ls' })
+      // 不允许标签泄漏到正文
+      assert.doesNotMatch(joinedText(chunks), /<arg_key>|<\/tool_call>/, `deltaSize=${deltaSize} 有泄漏`)
+    }
+  })
+
+  it('工具名不在白名单时不恢复（防止误伤）', () => {
+    const text = 'notatool<arg_key>a</arg_key><arg_value>1</arg_value>'
+    const parsed = parseTextToolCalls(text, ['pwsh'])
+    assert.equal(parsed.calls.length, 0)
+    assert.equal(isConvertible(parsed, ['pwsh']), false)
+  })
+
+  it('提到工具名但没有 arg_key 时不恢复（正常正文不误判）', () => {
+    const text = '我准备用 pwsh 跑一下这个命令，然后看看结果。'
+    const parsed = parseTextToolCalls(text, ['pwsh'])
+    assert.equal(parsed.calls.length, 0)
+    assert.equal(isConvertible(parsed, ['pwsh']), false)
+  })
+
+  it('工具名前面没有边界字符时不误判（如 mypwsh）', () => {
+    const text = 'mypwsh<arg_key>a</arg_key><arg_value>1</arg_value>'
+    const parsed = parseTextToolCalls(text, ['pwsh'])
+    assert.equal(parsed.calls.length, 0)
+  })
+
+  it('未传白名单时不启用残缺回退', () => {
+    const text = 'pwsh<arg_key>command</arg_key><arg_value>ls</arg_value>'
+    const parsed = parseTextToolCalls(text, undefined)
+    assert.equal(parsed.calls.length, 0)
+  })
+})
+
 describe('解析器：畸形输入一律不转换', () => {
   it('未闭合的 <tool_call> 不产生调用', () => {
     const parsed = parseTextToolCalls('<tool_call>get_weather<arg_key>city</arg_key>', ['get_weather'])

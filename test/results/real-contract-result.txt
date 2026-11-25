@@ -1,6 +1,7 @@
-﻿# 真实 LlmRuntime 契约验证
-# 运行时: <由你本机实际运行时填写>
-# node_modules: <自动探测到的路径>
+# 真实 LlmRuntime 契约验证
+# 运行时: electron 44.7.0
+
+# node_modules: D:\DeepSeek Harness\resources\app.asar\dsh\node_modules
 
 真实模块已加载（LlmRuntime + BlockAssembler）
 
