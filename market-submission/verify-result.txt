@@ -1,0 +1,9 @@
+# 校验 lyhtakeashot__dsh-xunfei-toolcall-adapter.yml
+
+url:      https://github.com/lyhtakeashot/dsh-xunfei-toolcall-adapter
+name:     lyhtakeashot/dsh-xunfei-toolcall-adapter
+category: model
+en 长度:  532
+zh 长度:  227
+
+RESULT PASS — 与 awesome-dsh-plugin 的校验规则一致
