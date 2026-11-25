@@ -1,0 +1,6 @@
+url: https://github.com/lyhtakeashot/dsh-xunfei-toolcall-adapter
+name: lyhtakeashot/dsh-xunfei-toolcall-adapter
+category: model
+description:
+  en: 'Fixes Xunfei MaaS (spark-x2.6) emitting tool calls as plain text, which ends the agent turn without running the tool. Registers a xunfei-compatible provider route that wraps an existing Xunfei route and translates at the StreamChunk layer: a stop response whose text holds a complete <tool_call> block for a tool declared in that request becomes standard tool-call blocks with a tool-calls finish. Every other response streams through untouched, and prose never loses streaming. No local proxy and no credential handling of its own.'
+  zh: '修复讯飞 MaaS（spark-x2.6）把工具调用写成纯文本、导致 agent 轮次直接结束而工具从未执行的问题。新增 xunfei-compatible 这条件，包装已有讯飞 route，在 StreamChunk 层翻译：终态 stop 且正文含完整 <tool_call> 块、工具名在本次请求声明内时，改写为标准 tool-call 块并以 tool-calls 收尾。其余响应一律原样透传，正文始终保持流式。不起本地代理，自身不接触任何凭据。'
